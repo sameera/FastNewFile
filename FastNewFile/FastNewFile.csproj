@@ -85,6 +85,10 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="index.html" />
+    <Content Include="ReleaseNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\FastNewFileCommand.png" />
     <Content Include="Resources\FastNewFileCommandPackage.ico" />
     <Resource Include="Resources\icon.png" />

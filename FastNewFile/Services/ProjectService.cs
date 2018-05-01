@@ -13,7 +13,7 @@ namespace FastNewFile.Services
         private readonly PackageService _packageService;
         private readonly TemplateService _templateService;
 
-        private readonly string _projectPath;
+        private readonly string _projectRoot;
 
         private string _defaultExtensionByProjectType;
 
@@ -22,9 +22,13 @@ namespace FastNewFile.Services
 
         public ProjectService(Project project, PackageService packageService, TemplateService templateService)
         {
-            _project = project;
+            // If the selected item on the Solution Explorer is a Solution Folder, some of the properties of 'project'
+            // will be null or empty. Examples are CodeModel and FullName both used below.
 
-            switch (_project.CodeModel.Language)
+            _project = project;
+            _defaultExtensionByProjectType = string.Empty;
+
+            switch (_project.CodeModel?.Language)
             {
                 case CodeModelLanguageConstants.vsCMLanguageCSharp:
                     _defaultExtensionByProjectType = ".cs";
@@ -32,15 +36,24 @@ namespace FastNewFile.Services
                 case CodeModelLanguageConstants.vsCMLanguageVB:
                     _defaultExtensionByProjectType = ".vb";
                     break;
-                default:
-                    _defaultExtensionByProjectType = string.Empty;
-                    break;
             }
 
             _packageService = packageService;
             _templateService = templateService;
 
-            _projectPath = Path.GetDirectoryName(project.FullName);
+            bool wasRetreived = this.TryGetProperty("FullPath", out Property prop)
+                        // MFC projects don't have FullPath, and there seems to be no way to query existence
+                        || this.TryGetProperty("ProjectDirectory", out prop)
+                        || this.TryGetProperty("ProjectPath", out prop);
+
+            if (wasRetreived)
+            {
+                _projectRoot = prop.Value.ToString();
+            }
+            else
+            {
+                _projectRoot = Path.GetDirectoryName(_project.DTE.Solution.FullName);
+            }
         }
 
         public string GetProjectDefaultExtension()
@@ -89,29 +102,36 @@ namespace FastNewFile.Services
             });
         }
 
-        public Property GetProjectRoot()
+        public string GetProjectRoot()
         {
-            Property prop;
+            return _projectRoot;
+            //bool wasRetreived = this.TryGetProperty("FullPath", out Property prop)
+            //            // MFC projects don't have FullPath, and there seems to be no way to query existence
+            //            || this.TryGetProperty("ProjectDirectory", out prop)
+            //            || this.TryGetProperty("ProjectPath", out prop);
 
+            //if (wasRetreived)
+            //{
+            //    return prop.Value.ToString();
+            //}
+            //else
+            //{
+            //    return Path.GetDirectoryName(_project.DTE.Solution.FullName);
+            //}
+        }
+
+        private bool TryGetProperty(string propertyName, out Property property)
+        {
             try
             {
-                prop = _project.Properties.Item("FullPath");
+                property = _project.Properties.Item(propertyName);
+                return true;
             }
             catch (ArgumentException)
             {
-                try
-                {
-                    // MFC projects don't have FullPath, and there seems to be no way to query existence
-                    prop = _project.Properties.Item("ProjectDirectory");
-                }
-                catch (ArgumentException)
-                {
-                    // Installer projects have a ProjectPath.
-                    prop = _project.Properties.Item("ProjectPath");
-                }
+                property = null;
+                return false;
             }
-
-            return prop;
         }
 
         public string GetParentFolder(UIHierarchyItem item)
@@ -153,30 +173,31 @@ namespace FastNewFile.Services
             }
             else if (project != null)
             {
-                Property prop = GetProjectRoot();
+                //string prop = GetProjectRoot();
 
-                if (prop != null)
-                {
-                    string value = prop.Value.ToString();
+                //if (prop != null)
+                //{
+                //    string value = prop.Value.ToString();
 
-                    if (File.Exists(value))
-                    {
-                        folder = Path.GetDirectoryName(value);
-                    }
-                    else if (Directory.Exists(value))
-                    {
-                        folder = value;
-                    }
-                }
+                //    if (File.Exists(value))
+                //    {
+                //        folder = Path.GetDirectoryName(value);
+                //    }
+                //    else if (Directory.Exists(value))
+                //    {
+                //        folder = value;
+                //    }
+                //}
+                folder = _projectRoot;
             }
             return folder;
         }
 
         public bool TryGetRelativePath(string path, out string relativePath)
         {
-            if (path.StartsWith(_projectPath, StringComparison.OrdinalIgnoreCase) && path.Length > _projectPath.Length)
+            if (path.StartsWith(_projectRoot, StringComparison.OrdinalIgnoreCase) && path.Length > _projectRoot.Length)
             {
-                relativePath = path.Substring(_projectPath.Length + 1);
+                relativePath = path.Substring(_projectRoot.Length + 1);
                 return true;
             }
             else
@@ -206,7 +227,7 @@ namespace FastNewFile.Services
         {
             try
             {
-                var creator = this.GetCreator(_projectPath, item);
+                var creator = this.GetCreator(_projectRoot, item);
                 var info = creator.Create(_project);
 
                 SelectCurrentItem();

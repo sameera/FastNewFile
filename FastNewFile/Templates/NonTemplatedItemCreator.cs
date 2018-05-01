@@ -76,8 +76,7 @@ namespace FastNewFile.Templates
             if (project == null || project.Kind == "{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") // ASP.NET 5 projects
                 return false;
 
-            string projectFilePath = _projectService.GetProjectRoot().Value.ToString();
-            string projectDirPath = Path.GetDirectoryName(projectFilePath);
+            string projectDirPath = _projectService.GetProjectRoot();
 
             if (!fileName.StartsWith(projectDirPath, StringComparison.OrdinalIgnoreCase))
                 return false;
