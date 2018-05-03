@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="FastNewFile.c2b64db8-2ec9-4d57-a1c1-2063a0f7122f" Version="1.1" Language="en-US" Publisher="Sameera Perera" />
+        <Identity Id="FastNewFile.c2b64db8-2ec9-4d57-a1c1-2063a0f7122f" Version="1.2" Language="en-US" Publisher="Sameera Perera" />
         <DisplayName>FastNewFile</DisplayName>
         <Description xml:space="preserve">Visual Studio 2017 Extension for Adding a New File quickly.</Description>
         <License>Resources\License.txt</License>

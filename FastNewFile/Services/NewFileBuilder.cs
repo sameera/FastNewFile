@@ -9,6 +9,7 @@ namespace FastNewFile.Services
 {
     class NewFileBuilder
     {
+        public const string DummyFileName = "__dummy__";
         private readonly PackageService _packageService;
         private readonly TemplateService _templateSerivice;
 
@@ -41,7 +42,7 @@ namespace FastNewFile.Services
                 return;
             else if (input.EndsWith("\\"))
             {
-                input = input + "__dummy__";
+                input = input + DummyFileName;
             }
 
             TemplateMap templates = _templateSerivice.GetTemplates();

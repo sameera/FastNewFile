@@ -54,6 +54,11 @@ namespace FastNewFile.Services
             {
                 _projectRoot = Path.GetDirectoryName(_project.DTE.Solution.FullName);
             }
+
+            if (_projectRoot[_projectRoot.Length - 1] == Path.DirectorySeparatorChar || _projectRoot[_projectRoot.Length - 1] == Path.AltDirectorySeparatorChar)
+            {
+                _projectRoot = _projectRoot.Substring(0, _projectRoot.Length - 1);
+            }
         }
 
         public string GetProjectDefaultExtension()
@@ -231,7 +236,9 @@ namespace FastNewFile.Services
                 var info = creator.Create(_project);
 
                 SelectCurrentItem();
-                
+
+                if (item.EndsWith(NewFileBuilder.DummyFileName)) return; // Don't update extension when crearting folder.
+
                 // If the same extension was used continuously, make it the default extension
                 if (info != ItemInfo.Empty && LastUsedExtension != _defaultExtensionByProjectType && info.Extension == LastUsedExtension)
                 {

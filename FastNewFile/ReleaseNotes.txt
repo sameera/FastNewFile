@@ -1,5 +1,5 @@
 ﻿Version 1.1
-- Fixed: Adding a file to a Solution Folder throw Null Reference exception.
+- Fixed: Adding a file to a Solution Folder throws Null Reference exception.
 
 Version 1.0
 - Initial release as FastNewFile with support for Visual Studio 2017
