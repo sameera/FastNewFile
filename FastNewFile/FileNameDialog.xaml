@@ -5,18 +5,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="26" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="auto" />
-        </Grid.ColumnDefinitions>
-
-        <Label Grid.Row="0" Grid.Column="0" Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Center" Height="26" FontWeight="SemiBold" />
-        <TextBox Grid.Row="0" Grid.Column="1" Name="txtName" VerticalContentAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-        <Button Grid.Row="0" Grid.Column="2" Content="Add file" HorizontalAlignment="Center" Margin="10,0" VerticalAlignment="Center" Width="75" Height="23" IsDefault="True" Name="btnCreate" Click="Button_Click" />
-
-        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="lblTips" Content="Tips" HorizontalAlignment="Left" Margin="5,0" VerticalAlignment="Bottom" Height="26" />
+        <WrapPanel Grid.Row="0">
+            <Label x:Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" FontWeight="SemiBold" Margin="2,2,0,0" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" x:Name="txtName" VerticalContentAlignment="Center" Height="25" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="246" Margin="2,2,0,0" />
+                <Button Grid.Column="1" Content="Add file" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="25" IsDefault="True" x:Name="btnCreate" Click="Button_Click" Margin="2,2,0,0" />
+            </Grid>
+        </WrapPanel>
+        <Label  Grid.Row="1" x:Name="lblTips" Content="Tips" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="26" />
     </Grid>
 </Window>

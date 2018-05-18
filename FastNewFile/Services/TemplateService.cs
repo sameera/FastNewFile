@@ -27,7 +27,7 @@ namespace FastNewFile.Services
                     {
                         string path = Path.Combine(
                                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                        "VisualStudio.AddAnyFile",
+                                        "VisualStudio.FastNewFile",
                                         "Patterns.json");
                         if ((templates = this.LoadFromFile(path)) == null)
                         {
