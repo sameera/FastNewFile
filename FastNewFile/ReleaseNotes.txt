@@ -1,4 +1,8 @@
-﻿Version 1.1
+﻿Version 1.6
+- Allows the Pattern.json file to refer to a template by full path. 
+See https://sameera.tech/2018/05/19/how-to-create-a-template-mapping-for-fast-new-file-fnf-extension/ for more information.
+
+Version 1.1
 - Fixed: Adding a file to a Solution Folder throws Null Reference exception.
 
 Version 1.0
