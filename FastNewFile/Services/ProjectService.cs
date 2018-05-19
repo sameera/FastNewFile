@@ -15,7 +15,7 @@ namespace FastNewFile.Services
 
         private readonly string _projectRoot;
 
-        private string _defaultExtensionByProjectType;
+        private readonly string _defaultExtensionByProjectType;
 
         public string OverridingExtension { get; private set; }
         public string LastUsedExtension { get; private set; }
@@ -246,6 +246,15 @@ namespace FastNewFile.Services
                     OverridingExtension = info.Extension;
                 }
                 LastUsedExtension = info.Extension;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show(
+                    "VisualStudio returned an error adding this file to the project.\nIt's possible that the current project doesn't support this type of file.",
+                    "Cannot Add New File",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
             catch (Exception ex)
             {

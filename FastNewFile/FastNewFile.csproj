@@ -57,6 +57,7 @@
     <Compile Include="FileNameDialog.xaml.cs">
       <DependentUpon>FileNameDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Delete.cs" />
     <Compile Include="Services\NewFileBuilder.cs" />
     <Compile Include="Services\PackageService.cs" />
     <Compile Include="FastNewFileCommand.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Templates\IItemCreator.cs" />
     <Compile Include="Templates\NonTemplatedItemCreator.cs" />
-    <Compile Include="Templates\ProjectItemManager.cs" />
     <Compile Include="Templates\TemplatedItemCreator.cs" />
     <Compile Include="Templates\TemplateMap.cs" />
     <Compile Include="Templates\TemplateMapping.cs" />

@@ -39,6 +39,7 @@
             */
             this.Add(new M(@"^e:(?<name>.*)\.cs", "CSharp", "CodeFile"));
             // Following mappings are the broadest from a language POV. So, they need to be at the end of the mappings
+            this.Add(new M(@"^(?<name>.*)\.vb", "VisualBasic", "Class"));
             this.Add(new M(@"^(?<name>.*)\.cs$", "CSharp", "Class"));
             this.Add(new M(@"^(?<name>.*)\.js$", "JavaScript", "JScript"));
         }

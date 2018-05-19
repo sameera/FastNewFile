@@ -3,6 +3,7 @@
     using EnvDTE;
     using FastNewFile.Services;
     using System;
+    using System.IO;
     using System.Linq;
     using System.Xml.Linq;
 
@@ -25,7 +26,9 @@
 
         public ItemInfo Create(Project project)
         {
-            string templatePath = _templateService.GetItemTemplate(_template.TemplateName, _template.Language);
+            string templatePath = Path.IsPathRooted(_template.TemplateName)
+                            ? _template.TemplateName
+                            : _templateService.GetItemTemplate(_template.TemplateName, _template.Language);
             string ext = GetTargetExtension(templatePath);
 
             string itemName = _relativePath[_relativePath.Length - 1];

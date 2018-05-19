@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace FastNewFile.Services
@@ -73,15 +74,18 @@ namespace FastNewFile.Services
         {
             try
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
-                using (var fileStream = File.OpenWrite(path))
+                using (var stream = new MemoryStream())
                 {
                     var serizlier = new DataContractJsonSerializer(
                                         typeof(TemplateMap),
                                         new DataContractJsonSerializerSettings() {
-                                            UseSimpleDictionaryFormat = true
+                                            UseSimpleDictionaryFormat = true,
                                         });
-                    serizlier.WriteObject(fileStream, map);
+                    serizlier.WriteObject(stream, map);
+
+                    stream.Position = 0;
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    File.WriteAllBytes(path, stream.ToArray());
                 }
             }
             catch (System.Exception e)

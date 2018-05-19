@@ -66,7 +66,7 @@ namespace FastNewFile.Templates
             }
             else
             {
-                MessageBox.Show("The file '" + file + "' already exist.");
+                MessageBox.Show($"The file '{file}' already exist.");
             }
             return ItemInfo.Empty;
         }
